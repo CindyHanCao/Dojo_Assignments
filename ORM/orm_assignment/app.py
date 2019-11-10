@@ -1,4 +1,4 @@
-from flask import Flask, render_template				# same as before
+from flask import Flask, render_template, redirect, request			# same as before
 from flask_sqlalchemy import SQLAlchemy			# instead of mysqlconnection
 from sqlalchemy.sql import func     # ADDED THIS LINE FOR DEFAULT TIMESTAMP
 from flask_migrate import Migrate			# this is new
@@ -24,7 +24,17 @@ class User(db.Model):
 # routes go here...
 @app.route('/')
 def home_page():
-    return render_template('index.html')
+    all_users = User.query.all()
+    return render_template('index.html', users = all_users)
+
+@app.route('/process', methods=['POST'])
+def add_user():
+    new_user = User(first_name=request.form['fname'], last_name=request.form['lname'], email=request.form['email'], age=request.form['age'])
+    db.session.add(new_user)
+    db.session.commit()
+    print(new_user)
+    return redirect('/')
+
 
 if __name__ == "__main__":
     app.run(debug=True)

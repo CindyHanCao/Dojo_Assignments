@@ -4,9 +4,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>C+R Users</title>
 </head>
 <body>
-    <h1>Yo it worked!</h1>
+    <h1>All the Users</h1>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Age</th>
+        </tr>
+        {% for u in users %}
+        <tr>
+            <td>{{u.id}}</td>
+            <td>{{u.first_name}} {{u.last_name}}</td>
+            <td>{{u.email}}</td>
+            <td>{{u.age}}</td>
+        </tr>
+        {% endfor %}
+
+    </table>
+    <hr>
+    <h1>Add a User</h1>
+    <form action="/process" method="POST">
+        <p>First Name: <input type="text" name="fname"></p>
+        <p>Last Name: <input type="text" name="lname"></p>
+        <p>Email: <input type="text" name="email"></p>
+        <p>Age: <input type="text" name="age"></p>
+        <input type="submit" value="Add">
+    </form>
+
 </body>
 </html>
